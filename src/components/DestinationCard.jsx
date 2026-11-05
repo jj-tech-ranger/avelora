@@ -1,9 +1,9 @@
 import Button from './Button';
 
 const FALLBACK_IMAGE =
-    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='800' height='500' fill='%23142B49'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23C6A66B' font-family='Georgia, serif' font-size='28'>AVELORA AFRICA</text></svg>";
+    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'><rect width='100%' height='100%' fill='%23142B49'/><text x='50%' y='50%' fill='%23C6A66B' font-family='sans-serif' font-size='24' text-anchor='middle'>Image Unavailable</text></svg>";
 
-function DestinationCard({ destination, onEnquire }) {
+function DestinationCard({ destination, onEnquire, onReadMore }) {
     const { name, country, category, duration, image, description } = destination;
 
     const handleImageError = (event) => {
@@ -13,7 +13,11 @@ function DestinationCard({ destination, onEnquire }) {
 
     return (
         <article className="destination-card">
-            <div className="destination-image-wrap">
+            <div
+                className="destination-image-wrap"
+                onClick={() => onReadMore && onReadMore(destination)}
+                style={{ cursor: onReadMore ? 'pointer' : 'default' }}
+            >
                 <img
                     src={image}
                     alt={`${name}, ${country}`}
@@ -25,16 +29,39 @@ function DestinationCard({ destination, onEnquire }) {
             </div>
 
             <div className="destination-body">
-                <span className="destination-location">{country}</span>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        marginBottom: '0.35rem',
+                    }}
+                >
+          <span className="destination-location" style={{ marginBottom: 0 }}>
+            {country}
+          </span>
+                    <span style={{ fontSize: '0.78rem', color: '#526071', fontWeight: 500 }}>
+            {duration || 'Tailored Duration'}
+          </span>
+                </div>
+
                 <h3 className="destination-title">{name}</h3>
                 <p className="destination-desc">{description}</p>
 
                 <div className="destination-footer">
-          <span style={{ fontSize: '0.82rem', color: '#526071', fontWeight: 500 }}>
-            {duration || 'Tailored Duration'}
-          </span>
+                    {onReadMore && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => onReadMore(destination)}
+                            ariaLabel={`Read more about ${name}`}
+                        >
+                            Read More
+                        </Button>
+                    )}
                     <Button
-                        variant="outline"
+                        variant="primary"
                         size="sm"
                         onClick={() => onEnquire(name)}
                         ariaLabel={`Enquire about ${name}`}

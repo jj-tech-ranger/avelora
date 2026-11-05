@@ -88,6 +88,7 @@ function App() {
             case 'contact':
                 return (
                     <Contact
+                        key={selectedEnquirySubject}
                         initialSubject={selectedEnquirySubject}
                         onNavigate={handleNavigate}
                     />

@@ -100,7 +100,7 @@ function Registration({ onNavigate, onRequestQuote }) {
         if (!formData.email.trim()) {
             newErrors.email = 'Please enter your email address.';
         } else if (!emailPattern.test(formData.email.trim())) {
-            newErrors.email = 'Please enter a valid email address (e.g., name@example.com).';
+            newErrors.email = 'Please enter a valid email address (e.g., jane.doe@example.com).';
         }
 
         if (!formData.phone.trim()) {
@@ -179,7 +179,7 @@ function Registration({ onNavigate, onRequestQuote }) {
                     <SectionTitle
                         subtitle="Bespoke Journey Curation"
                         title="Your Personal Travel Profile"
-                        description="Share the destinations, accommodation styles, and experiences that inspire you. No password or login is required—this profile prepares your preferences for personalised consultation."
+                        description="Share the destinations, accommodation styles, and experiences that inspire you for tailored itinerary recommendations."
                     />
 
                     {submittedProfile ? (
@@ -190,17 +190,10 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     Thank you for registering with AVELORA. Your travel profile
                                     has been completed successfully.
                                 </h3>
-                                <p style={{ color: '#526071', marginBottom: '0.75rem' }}>
-                                    Welcome, <strong>{submittedProfile.fullName}</strong>. Your
-                                    preferred destinations and travel style have been recorded for
-                                    this session.
-                                </p>
-                                <p style={{ color: '#526071', fontSize: '0.88rem' }}>
-                                    <em>
-                                        Demonstration Notice: This is an academic frontend
-                                        demonstration submission and your information is not yet
-                                        being saved to a live external database.
-                                    </em>
+                                <p style={{ color: '#526071', marginBottom: 0 }}>
+                                    Welcome, <strong>{submittedProfile.fullName}</strong>. Our
+                                    senior travel specialists will use your saved preferences to
+                                    tailor your upcoming African journey recommendations.
                                 </p>
                             </div>
 
@@ -210,7 +203,7 @@ function Registration({ onNavigate, onRequestQuote }) {
 
                             <div className="modal-meta-grid" style={{ marginBottom: '1.5rem' }}>
                                 <div className="modal-meta-item">
-                                    <span className="modal-meta-label">Traveller & Residence</span>
+                                    <span className="modal-meta-label">Traveller &amp; Residence</span>
                                     <span className="modal-meta-value">
                     {submittedProfile.fullName} ({submittedProfile.country})
                   </span>
@@ -281,7 +274,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                     ) : (
                         <form className="form-card" onSubmit={handleSubmit} noValidate>
                             <div className="form-grid">
-                                {/* 1. Full Name */}
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="reg-fullName">
                                         Full Name *
@@ -291,7 +283,7 @@ function Registration({ onNavigate, onRequestQuote }) {
                                         name="fullName"
                                         type="text"
                                         className="form-input"
-                                        placeholder="e.g., Amara Ndlovu"
+                                        placeholder="e.g., Jane Doe"
                                         value={formData.fullName}
                                         onChange={handleInputChange}
                                     />
@@ -300,7 +292,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 2. Email Address */}
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="reg-email">
                                         Email Address *
@@ -310,7 +301,7 @@ function Registration({ onNavigate, onRequestQuote }) {
                                         name="email"
                                         type="email"
                                         className="form-input"
-                                        placeholder="e.g., amara@example.com"
+                                        placeholder="e.g., jane.doe@example.com"
                                         value={formData.email}
                                         onChange={handleInputChange}
                                     />
@@ -319,7 +310,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 3. Telephone Number */}
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="reg-phone">
                                         Telephone Number *
@@ -329,7 +319,7 @@ function Registration({ onNavigate, onRequestQuote }) {
                                         name="phone"
                                         type="tel"
                                         className="form-input"
-                                        placeholder="e.g., +27 82 555 0149"
+                                        placeholder="e.g., +254 700 790 480"
                                         value={formData.phone}
                                         onChange={handleInputChange}
                                     />
@@ -338,7 +328,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 4. Country of Residence */}
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="reg-country">
                                         Country of Residence *
@@ -348,7 +337,7 @@ function Registration({ onNavigate, onRequestQuote }) {
                                         name="country"
                                         type="text"
                                         className="form-input"
-                                        placeholder="e.g., South Africa, United Kingdom, Kenya"
+                                        placeholder="e.g., Kenya, South Africa, United Kingdom"
                                         value={formData.country}
                                         onChange={handleInputChange}
                                     />
@@ -357,7 +346,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 5. Preferred Type of Accommodation */}
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="reg-accommodation">
                                         Preferred Type of Accommodation *
@@ -381,7 +369,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 6. Number of Usual Travel Companions */}
                                 <div className="form-group">
                                     <label className="form-label" htmlFor="reg-companions">
                                         Number of Usual Travel Companions *
@@ -405,7 +392,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 7. Preferred Travel Categories */}
                                 <div className="form-group full-width">
                   <span className="form-label">
                     Preferred Travel Categories * (Select all that apply)
@@ -436,7 +422,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 8. Favourite African Destinations */}
                                 <div className="form-group full-width">
                   <span className="form-label">
                     Favourite African Destinations * (Select all that inspire
@@ -470,7 +455,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     )}
                                 </div>
 
-                                {/* 9. Travel Interests */}
                                 <div className="form-group full-width">
                   <span className="form-label">
                     Special Travel Interests (Optional)
@@ -491,7 +475,6 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     </div>
                                 </div>
 
-                                {/* 10. Additional Preferences */}
                                 <div className="form-group full-width">
                                     <label
                                         className="form-label"
@@ -517,9 +500,8 @@ function Registration({ onNavigate, onRequestQuote }) {
                                     marginBottom: '1.5rem',
                                 }}
                             >
-                                * Required fields. This registration form is a frontend academic
-                                demonstration and does not store personal data in an external
-                                database.
+                                * Required fields. Your travel preferences help our specialists
+                                prepare bespoke itinerary recommendations tailored to your group.
                             </p>
 
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>

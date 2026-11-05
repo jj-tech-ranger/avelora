@@ -12,25 +12,25 @@ const PLANNING_STEPS = [
         step: '01',
         title: 'Personal Consultation',
         description:
-            'Share your preferred African destinations, travel companions, dates, and interests through our enquiry form or traveller profile.',
+            'Share your preferred African destinations, travel companions, dates, and interests through our enquiry form.',
     },
     {
         step: '02',
         title: 'Tailored Itinerary Design',
         description:
-            'Our specialists craft a custom route balancing wildlife reserves, coastal retreats, and cultural experiences around your pace.',
+            'Our specialists craft a custom route balancing wildlife reserves, coastal retreats, and cultural experiences.',
     },
     {
         step: '03',
         title: 'Refined Accommodation & Logistics',
         description:
-            'We arrange handpicked lodges, boutique island resorts, light-aircraft bush transfers, and private guided excursions.',
+            'We arrange handpicked lodges, boutique island resorts, light-aircraft bush transfers, and private guides.',
     },
     {
         step: '04',
         title: 'Dedicated Journey Support',
         description:
-            'Travel with confidence knowing our team coordinates every transition from your arrival in Africa to your departure home.',
+            'Travel with confidence knowing our team coordinates every transition from your arrival in Africa to your journey home.',
     },
 ];
 
@@ -38,9 +38,9 @@ const TRAVEL_TIERS = {
     accessible: {
         badge: 'Accessible-Luxury Collection',
         title: 'Curated Boutique & Classic Luxury Packages',
-        priceRange: 'Illustrative starting range: $3,250 – $5,200 per guest',
+        priceRange: 'Indicative starting range: $3,250 – $5,200 per guest',
         description:
-            'Designed for couples, families, and small groups seeking authentic high-comfort African travel with transparent value and thoughtfully selected boutique lodges.',
+            'Designed for couples, families, and small groups seeking authentic high-comfort African travel with top-tier guiding and handpicked properties.',
         highlights: [
             'Handpicked 4-star and boutique 5-star safari lodges and beach resorts',
             'Small-group or private custom 4x4 game drives with experienced rangers',
@@ -53,7 +53,7 @@ const TRAVEL_TIERS = {
         title: 'Exclusive-Use Villas & Private Charter Sanctuaries',
         priceRange: 'Bespoke private quotation tailored to your party',
         description:
-            'Crafted for discerning travellers celebrating milestones or seeking complete privacy across exclusive conservancy camps and secluded island estates.',
+            'Crafted for discerning travellers celebrating milestones or seeking complete privacy across exclusive conservancies and private islands.',
         highlights: [
             'Exclusive-use safari villas, private plunge pools, and personal butler service',
             'Private charter bush aircraft, helicopter transfers, and dedicated trackers',
@@ -96,7 +96,7 @@ function Services({ onNavigate, onRequestQuote }) {
                     <SectionTitle
                         subtitle="Signature Offerings"
                         title="Five Ways to Discover Africa"
-                        description="Select any service category below to request a tailored quotation from our travel specialists."
+                        description="Select any service category below to request a tailored quotation from our travel team."
                     />
 
                     <div className="grid-3">
@@ -109,7 +109,7 @@ function Services({ onNavigate, onRequestQuote }) {
                         ))}
                     </div>
 
-                    {/* Illustrative Pricing Notice */}
+                    {/* Guide Pricing & Custom Quotations Note */}
                     <div
                         className="feature-card"
                         style={{
@@ -119,15 +119,15 @@ function Services({ onNavigate, onRequestQuote }) {
                         }}
                     >
                         <h3 style={{ fontSize: '1.35rem', marginBottom: '0.5rem' }}>
-                            Illustrative Pricing & Custom Quotations Note
+                            Guide Pricing &amp; Bespoke Quotations
                         </h3>
                         <p style={{ color: '#526071', fontSize: '0.94rem' }}>
-                            All starting prices displayed on this page are{' '}
-                            <strong>illustrative sample figures</strong> provided for academic
-                            demonstration purposes and do not represent live supplier tariffs.
-                            Because every AVELORA itinerary is customised around travel
-                            season, accommodation tier, and group size, our team prepares an
-                            individualised quotation for every enquiry.
+                            Starting rates shown above are{' '}
+                            <strong>indicative guide figures</strong> based on shoulder-season
+                            twin-share arrangements. Because every AVELORA itinerary is
+                            individually tailored around travel season, accommodation tier,
+                            and group size, our specialists prepare a personalised quotation
+                            for each enquiry.
                         </p>
                     </div>
                 </div>
@@ -139,7 +139,7 @@ function Services({ onNavigate, onRequestQuote }) {
                     <SectionTitle
                         subtitle="Flexible Luxury Positioning"
                         title="Choose Your Preferred Travel Style"
-                        description="AVELORA welcomes both travellers seeking curated accessible-luxury packages and guests desiring ultra-luxury private sanctuaries."
+                        description="AVELORA welcomes both travellers seeking curated accessible-luxury packages and those requesting complete ultra-luxury private exclusivity."
                     />
 
                     <div className="filter-bar">
@@ -189,8 +189,11 @@ function Services({ onNavigate, onRequestQuote }) {
 
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                             <Button
-                                variant="primary"
-                                onClick={() => onRequestQuote(activeTier.title)}
+                                onClick={() =>
+                                    onRequestQuote(
+                                        `Travel Tier Inquiry: ${activeTier.badge}`
+                                    )
+                                }
                             >
                                 Enquire About {activeTier.badge}
                             </Button>
@@ -208,7 +211,7 @@ function Services({ onNavigate, onRequestQuote }) {
                     <SectionTitle
                         subtitle="Seamless Planning"
                         title="How Your AVELORA Journey Comes Together"
-                        description="From your first conversation to your return flight, we make multi-destination African travel effortless."
+                        description="From your first conversation to your return flight, we make multi-destination travel effortless."
                     />
 
                     <div className="grid-4">
@@ -233,7 +236,7 @@ function Services({ onNavigate, onRequestQuote }) {
                     <SectionTitle
                         subtitle="Tailored Quotations"
                         title="Let Us Design Your Personalised African Holiday"
-                        description="Request a custom quotation for any of our five service categories or complete your Traveller Preference Profile."
+                        description="Request a custom quotation for any of our five service categories or complete your traveller profile."
                     />
                     <div
                         style={{

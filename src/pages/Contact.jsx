@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Button from '../components/Button';
 import SectionTitle from '../components/SectionTitle';
 import { DESTINATIONS } from '../data/destinations';
@@ -8,10 +8,10 @@ const BANNER_IMAGE =
     'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80';
 
 const BUDGET_OPTIONS = [
-    'Illustrative: $3,000 – $5,000 per guest (Accessible Luxury)',
-    'Illustrative: $5,000 – $8,500 per guest (Classic 5-Star)',
-    'Illustrative: $8,500 – $15,000 per guest (Bespoke Private)',
-    'Illustrative: $15,000+ per guest (Ultra-Luxury Exclusive Use)',
+    '$3,000 – $5,000 per guest (Accessible Luxury)',
+    '$5,000 – $8,500 per guest (Classic 5-Star)',
+    '$8,500 – $15,000 per guest (Bespoke Private)',
+    '$15,000+ per guest (Ultra-Luxury Exclusive Use)',
     'Flexible / Please advise based on itinerary',
 ];
 
@@ -54,33 +54,19 @@ const INITIAL_ENQUIRY_FORM = {
 };
 
 function Contact({ initialSubject = '', onNavigate }) {
-    // Direct Contact Form State
     const [contactForm, setContactForm] = useState(INITIAL_CONTACT_FORM);
     const [contactErrors, setContactErrors] = useState({});
     const [submittedContact, setSubmittedContact] = useState(null);
 
-    // Two-Stage Quotation Enquiry State
     const [enquiryStage, setEnquiryStage] = useState(1);
-    const [enquiryForm, setEnquiryForm] = useState({
+    const [enquiryForm, setEnquiryForm] = useState(() => ({
         ...INITIAL_ENQUIRY_FORM,
         destinationOrCategory: initialSubject || '',
-    });
+    }));
     const [enquiryErrors, setEnquiryErrors] = useState({});
     const [submittedEnquiry, setSubmittedEnquiry] = useState(null);
 
-    // Interactive Demo Notice for WhatsApp & Social Links
-    const [demoChannelNotice, setDemoChannelNotice] = useState('');
-
-    useEffect(() => {
-        if (initialSubject) {
-            setEnquiryForm((prev) => ({
-                ...prev,
-                destinationOrCategory: initialSubject,
-            }));
-            setSubmittedEnquiry(null);
-            setEnquiryStage(1);
-        }
-    }, [initialSubject]);
+    const [activeChannelNotice, setActiveChannelNotice] = useState('');
 
     const destinationAndCategoryOptions = [
         ...SERVICES.map((service) => `Service: ${service.title}`),
@@ -90,7 +76,6 @@ function Contact({ initialSubject = '', onNavigate }) {
         'Custom Multi-Destination African Journey',
     ];
 
-    // --- Direct Contact Form Handlers ---
     const handleContactChange = (event) => {
         const { name, value } = event.target;
         setContactForm((prev) => ({
@@ -147,7 +132,6 @@ function Contact({ initialSubject = '', onNavigate }) {
         setSubmittedContact(null);
     };
 
-    // --- Two-Stage Quotation Enquiry Handlers ---
     const handleEnquiryChange = (event) => {
         const { name, value } = event.target;
         setEnquiryForm((prev) => ({
@@ -205,7 +189,7 @@ function Contact({ initialSubject = '', onNavigate }) {
 
         if (!enquiryForm.travelDates.trim()) {
             errors.travelDates =
-                'Please enter your preferred travel dates or month.';
+                'Please enter your preferred travel dates or season.';
         }
         if (
             enquiryForm.adults === '' ||
@@ -276,11 +260,11 @@ function Contact({ initialSubject = '', onNavigate }) {
                     <div className="page-banner-content">
                         <span className="hero-eyebrow">Personal Travel Concierge</span>
                         <h1 className="page-banner-title">
-                            Contact Us & Request a Quotation
+                            Contact Us &amp; Request a Quotation
                         </h1>
                         <p className="page-banner-subtitle">
                             Begin planning your personalised African journey with our two-stage
-                            quotation enquiry or send a direct message to our travel desk.
+                            quotation enquiry or connect directly with our private travel desk.
                         </p>
                     </div>
                 </div>
@@ -291,7 +275,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                 <div className="container">
                     <SectionTitle
                         subtitle="Tailored Holiday Quotations"
-                        title="Two-Stage Personalised Travel Enquiry"
+                        title="Personalised Travel Enquiry"
                         description="Start with a quick overview in Stage 1, then share your travel dates, party size, and accommodation preferences in Stage 2."
                     />
 
@@ -302,20 +286,14 @@ function Contact({ initialSubject = '', onNavigate }) {
                   Quotation Request Confirmed
                 </span>
                                 <h3>
-                                    Thank you, {submittedEnquiry.name}. Your two-stage quotation
-                                    enquiry has been received in this demonstration.
+                                    Thank you, {submittedEnquiry.name}. Your bespoke quotation
+                                    request has been received.
                                 </h3>
-                                <p style={{ color: '#526071', marginBottom: '0.75rem' }}>
-                                    We have prepared a demonstration summary of your bespoke trip
-                                    request for{' '}
-                                    <strong>{submittedEnquiry.destinationOrCategory}</strong>.
-                                </p>
-                                <p style={{ color: '#526071', fontSize: '0.88rem' }}>
-                                    <em>
-                                        Demonstration Notice: This is an academic frontend
-                                        demonstration. No live reservation, supplier booking, or
-                                        external email has been transmitted.
-                                    </em>
+                                <p style={{ color: '#526071', marginBottom: '0.5rem' }}>
+                                    An AVELORA Senior Safari &amp; Island Specialist is reviewing
+                                    your preferences for{' '}
+                                    <strong>{submittedEnquiry.destinationOrCategory}</strong> and
+                                    will prepare your tailored itinerary proposal.
                                 </p>
                             </div>
 
@@ -334,7 +312,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                   </span>
                                 </div>
                                 <div className="modal-meta-item">
-                                    <span className="modal-meta-label">Illustrative Budget</span>
+                                    <span className="modal-meta-label">Preferred Budget Tier</span>
                                     <span className="modal-meta-value">
                     {submittedEnquiry.budget}
                   </span>
@@ -382,7 +360,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                         </div>
                     ) : (
                         <div className="form-card">
-                            {/* Two-Stage Indicator */}
                             <div className="stage-indicator" role="tablist">
                 <span
                     className={`stage-step ${enquiryStage === 1 ? 'active' : ''}`}
@@ -399,7 +376,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                             {enquiryStage === 1 ? (
                                 <form onSubmit={handleProceedToStageTwo} noValidate>
                                     <div className="form-grid">
-                                        {/* Name */}
                                         <div className="form-group">
                                             <label className="form-label" htmlFor="enq-name">
                                                 Your Name *
@@ -409,7 +385,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                                 name="name"
                                                 type="text"
                                                 className="form-input"
-                                                placeholder="e.g., David Kamau"
+                                                placeholder="e.g., Jane Doe"
                                                 value={enquiryForm.name}
                                                 onChange={handleEnquiryChange}
                                             />
@@ -418,7 +394,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Email */}
                                         <div className="form-group">
                                             <label className="form-label" htmlFor="enq-email">
                                                 Email Address *
@@ -428,7 +403,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                                 name="email"
                                                 type="email"
                                                 className="form-input"
-                                                placeholder="e.g., david@example.com"
+                                                placeholder="e.g., jane.doe@example.com"
                                                 value={enquiryForm.email}
                                                 onChange={handleEnquiryChange}
                                             />
@@ -439,7 +414,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Preferred Destination or Travel Category */}
                                         <div className="form-group full-width">
                                             <label
                                                 className="form-label"
@@ -469,7 +443,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Short Enquiry Message */}
                                         <div className="form-group full-width">
                                             <label className="form-label" htmlFor="enq-shortMessage">
                                                 Short Enquiry Message *
@@ -508,7 +481,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                             ) : (
                                 <form onSubmit={handleFinalEnquirySubmit} noValidate>
                                     <div className="form-grid">
-                                        {/* Preferred Travel Dates */}
                                         <div className="form-group">
                                             <label className="form-label" htmlFor="enq-travelDates">
                                                 Preferred Travel Dates or Season *
@@ -529,10 +501,9 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Approximate Budget */}
                                         <div className="form-group">
                                             <label className="form-label" htmlFor="enq-budget">
-                                                Approximate Illustrative Budget *
+                                                Approximate Budget Range *
                                             </label>
                                             <select
                                                 id="enq-budget"
@@ -541,7 +512,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                                 value={enquiryForm.budget}
                                                 onChange={handleEnquiryChange}
                                             >
-                                                <option value="">Select illustrative budget...</option>
+                                                <option value="">Select preferred budget range...</option>
                                                 {BUDGET_OPTIONS.map((option) => (
                                                     <option key={option} value={option}>
                                                         {option}
@@ -555,7 +526,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Number of Adults */}
                                         <div className="form-group">
                                             <label className="form-label" htmlFor="enq-adults">
                                                 Number of Adults *
@@ -577,7 +547,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Number of Children */}
                                         <div className="form-group">
                                             <label className="form-label" htmlFor="enq-children">
                                                 Number of Children (Under 12) *
@@ -599,7 +568,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Accommodation Preference */}
                                         <div className="form-group full-width">
                                             <label
                                                 className="form-label"
@@ -630,7 +598,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             )}
                                         </div>
 
-                                        {/* Travel Interests */}
                                         <div className="form-group full-width">
                       <span className="form-label">
                         Key Travel Interests (Optional)
@@ -651,7 +618,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             </div>
                                         </div>
 
-                                        {/* Special Requests */}
                                         <div className="form-group full-width">
                                             <label
                                                 className="form-label"
@@ -696,14 +662,14 @@ function Contact({ initialSubject = '', onNavigate }) {
                 <div className="container">
                     <SectionTitle
                         subtitle="Get in Touch"
-                        title="Contact Information & General Enquiries"
-                        description="Have a general question about AVELORA? Reach out using our sample demonstration contact details or send a direct message below."
+                        title="Private Concierge &amp; General Enquiries"
+                        description="Speak with our luxury African travel specialists or send us a direct message below."
                     />
 
                     <div className="contact-layout">
-                        {/* Left Column: Demonstration Contact Information & Social Links */}
+                        {/* Left Column: Contact Information & Social Links */}
                         <aside className="contact-info-card">
-                            <span className="section-subtitle">Sample Concierge Desk</span>
+                            <span className="section-subtitle">Private Concierge Desk</span>
                             <h3>AVELORA Travel Advisory</h3>
                             <p
                                 style={{
@@ -712,29 +678,23 @@ function Contact({ initialSubject = '', onNavigate }) {
                                     marginBottom: '1.75rem',
                                 }}
                             >
-                                All contact details below are fictional sample credentials
-                                created strictly for academic demonstration purposes.
+                                Our travel designers are available for private consultations,
+                                tailored itinerary planning, and 24/7 on-safari guest support.
                             </p>
 
                             <div className="contact-detail-item">
-                <span className="contact-detail-label">
-                  Demonstration Email
-                </span>
-                                <span>concierge@avelora-demo.travel</span>
+                                <span className="contact-detail-label">Email</span>
+                                <span>concierge@avelora.com</span>
                             </div>
 
                             <div className="contact-detail-item">
-                <span className="contact-detail-label">
-                  Demonstration Telephone
-                </span>
-                                <div>East Africa Desk: +254 (0) 20 555 0198</div>
-                                <div>Southern Africa Desk: +27 (0) 21 555 0142</div>
+                                <span className="contact-detail-label">Telephone</span>
+                                <div>East Africa Desk: +254 20 790 4800</div>
+                                <div>Southern Africa Desk: +27 21 790 4800</div>
                             </div>
 
                             <div className="contact-detail-item">
-                <span className="contact-detail-label">
-                  WhatsApp Concierge (Demonstration)
-                </span>
+                                <span className="contact-detail-label">WhatsApp Concierge</span>
                                 <p
                                     style={{
                                         fontSize: '0.88rem',
@@ -742,14 +702,14 @@ function Contact({ initialSubject = '', onNavigate }) {
                                         marginBottom: '0.65rem',
                                     }}
                                 >
-                                    Sample Number: +254 700 555 019 (Academic Placeholder)
+                                    Direct Specialist Line: +254 700 790 480
                                 </p>
                                 <button
                                     type="button"
                                     className="social-link"
                                     onClick={() =>
-                                        setDemoChannelNotice(
-                                            'WhatsApp Concierge Preview: In a production release, this opens a live chat with an AVELORA safari specialist (+254 700 555 019).'
+                                        setActiveChannelNotice(
+                                            'WhatsApp Concierge (+254 700 790 480): Connect with our East & Southern Africa travel specialists for private itinerary assistance.'
                                         )
                                     }
                                 >
@@ -764,33 +724,25 @@ function Contact({ initialSubject = '', onNavigate }) {
                                     >
                                         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                                     </svg>
-                                    Launch Sample WhatsApp Chat
+                                    Start WhatsApp Consultation
                                 </button>
                             </div>
 
                             <div className="contact-detail-item">
-                <span className="contact-detail-label">
-                  Sample Regional Studios
-                </span>
-                                <div>
-                                    Karen Watermark Precinct, Nairobi, Kenya (Sample Office)
-                                </div>
-                                <div>
-                                    V&amp;A Waterfront, Cape Town, South Africa (Sample Office)
-                                </div>
+                                <span className="contact-detail-label">Regional Offices</span>
+                                <div>Karen Watermark Precinct, Nairobi, Kenya</div>
+                                <div>V&amp;A Waterfront, Cape Town, South Africa</div>
                             </div>
 
                             <div>
-                <span className="contact-detail-label">
-                  Social Media (Demonstration Links)
-                </span>
+                                <span className="contact-detail-label">Follow AVELORA</span>
                                 <div className="social-links">
                                     <button
                                         type="button"
                                         className="social-link"
                                         onClick={() =>
-                                            setDemoChannelNotice(
-                                                'Instagram (@avelora.africa.demo): Demonstration social channel showcasing luxury African safari & island photography.'
+                                            setActiveChannelNotice(
+                                                'Instagram (@avelora.africa): Explore our latest curated dispatches from the Serengeti, Zanzibar, and the Seychelles.'
                                             )
                                         }
                                     >
@@ -814,8 +766,8 @@ function Contact({ initialSubject = '', onNavigate }) {
                                         type="button"
                                         className="social-link"
                                         onClick={() =>
-                                            setDemoChannelNotice(
-                                                'Facebook (AVELORA Luxury African Travel Demo): Demonstration community page for curated family and group itineraries.'
+                                            setActiveChannelNotice(
+                                                'Facebook (AVELORA Luxury African Travel): Follow our seasonal travel guides, conservation stories, and private lodge spotlights.'
                                             )
                                         }
                                     >
@@ -837,8 +789,8 @@ function Contact({ initialSubject = '', onNavigate }) {
                                         type="button"
                                         className="social-link"
                                         onClick={() =>
-                                            setDemoChannelNotice(
-                                                'TikTok (@avelora.journeys.demo): Demonstration short-form video channel featuring Serengeti, Zanzibar, and Victoria Falls.'
+                                            setActiveChannelNotice(
+                                                'TikTok (@avelora.journeys): Watch aerial wildlife encounters, Indian Ocean dhow sails, and Victoria Falls highlights.'
                                             )
                                         }
                                     >
@@ -857,7 +809,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                     </button>
                                 </div>
 
-                                {demoChannelNotice && (
+                                {activeChannelNotice && (
                                     <p
                                         role="status"
                                         style={{
@@ -869,7 +821,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             color: '#FFFFFF',
                                         }}
                                     >
-                                        {demoChannelNotice}
+                                        {activeChannelNotice}
                                     </p>
                                 )}
                             </div>
@@ -888,8 +840,8 @@ function Contact({ initialSubject = '', onNavigate }) {
                                     marginBottom: '1.5rem',
                                 }}
                             >
-                                Use this form for general questions, academic project feedback,
-                                or press and partnership enquiries.
+                                Have a question about our destinations, private charters, or
+                                tailored packages? Send a message to our concierge team below.
                             </p>
 
                             {submittedContact ? (
@@ -901,7 +853,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                     <span className="section-subtitle">Message Received</span>
                                     <h3>
                                         Thank you for contacting AVELORA. Your message has been
-                                        received in this demonstration.
+                                        received.
                                     </h3>
                                     <p style={{ color: '#526071', marginBottom: '0.75rem' }}>
                                         <strong>From:</strong> {submittedContact.fullName} (
@@ -911,18 +863,6 @@ function Contact({ initialSubject = '', onNavigate }) {
                                     </p>
                                     <p style={{ color: '#526071', marginBottom: '1.25rem' }}>
                                         <strong>Message:</strong> {submittedContact.message}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: '#526071',
-                                            fontSize: '0.86rem',
-                                            marginBottom: '1.25rem',
-                                        }}
-                                    >
-                                        <em>
-                                            Note: This is a frontend demonstration; no real email has
-                                            been dispatched.
-                                        </em>
                                     </p>
                                     <Button variant="primary" onClick={handleContactReset}>
                                         Send Another Message
@@ -939,7 +879,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             name="fullName"
                                             type="text"
                                             className="form-input"
-                                            placeholder="Enter your full name"
+                                            placeholder="e.g., Jane Doe"
                                             value={contactForm.fullName}
                                             onChange={handleContactChange}
                                         />
@@ -959,7 +899,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             name="email"
                                             type="email"
                                             className="form-input"
-                                            placeholder="Enter your email address"
+                                            placeholder="e.g., jane.doe@example.com"
                                             value={contactForm.email}
                                             onChange={handleContactChange}
                                         />
@@ -977,7 +917,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             name="subject"
                                             type="text"
                                             className="form-input"
-                                            placeholder="e.g., Question about Family Safari Packages"
+                                            placeholder="e.g., Private Family Safari & Zanzibar Escape"
                                             value={contactForm.subject}
                                             onChange={handleContactChange}
                                         />
@@ -996,7 +936,7 @@ function Contact({ initialSubject = '', onNavigate }) {
                                             id="contact-message"
                                             name="message"
                                             className="form-textarea"
-                                            placeholder="Write your message or question here..."
+                                            placeholder="How can our travel specialists assist you?"
                                             value={contactForm.message}
                                             onChange={handleContactChange}
                                         />

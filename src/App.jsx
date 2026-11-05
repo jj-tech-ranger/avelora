@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import SectionTitle from './components/SectionTitle';
-import Button from './components/Button';
 import DestinationModal from './components/DestinationModal';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Gallery from './pages/Gallery';
+import Registration from './pages/Registration';
+import Contact from './pages/Contact';
 
 const VALID_PAGES = ['home', 'about', 'services', 'gallery', 'registration', 'contact'];
 
@@ -78,26 +78,27 @@ function App() {
                         onReadMore={setActiveDestination}
                     />
                 );
+            case 'registration':
+                return (
+                    <Registration
+                        onNavigate={handleNavigate}
+                        onRequestQuote={handleRequestQuote}
+                    />
+                );
+            case 'contact':
+                return (
+                    <Contact
+                        initialSubject={selectedEnquirySubject}
+                        onNavigate={handleNavigate}
+                    />
+                );
             default:
                 return (
-                    <section className="section section-ivory">
-                        <div className="container">
-                            <SectionTitle
-                                subtitle="Page Under Construction"
-                                title={`Active Page: ${currentPage.toUpperCase()}`}
-                                description={
-                                    selectedEnquirySubject
-                                        ? `Quote enquiry initiated for: ${selectedEnquirySubject}`
-                                        : 'This page will be built in the upcoming steps. Use the navigation bar to view Home, About Us, Services, or Gallery.'
-                                }
-                            />
-                            <div style={{ textAlign: 'center' }}>
-                                <Button variant="primary" onClick={() => handleNavigate('home')}>
-                                    Return to Homepage
-                                </Button>
-                            </div>
-                        </div>
-                    </section>
+                    <Home
+                        onNavigate={handleNavigate}
+                        onRequestQuote={handleRequestQuote}
+                        onReadMore={setActiveDestination}
+                    />
                 );
         }
     };
